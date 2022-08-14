@@ -9,7 +9,21 @@ import { Link } from 'react-router-dom'
 import { ExternalLink } from '../../../../components/ExternalLink'
 import { PostInfoCardContainer, PostInfo } from './styles'
 
-export function PostInfoCard() {
+interface PostInfoCardProps {
+  url: string | undefined
+  title: string | undefined
+  author: string | undefined
+  createdAt: string | undefined
+  comments: number | undefined
+}
+
+export function PostInfoCard({
+  title,
+  author,
+  comments,
+  url,
+  createdAt,
+}: PostInfoCardProps) {
   return (
     <PostInfoCardContainer>
       <header>
@@ -18,24 +32,25 @@ export function PostInfoCard() {
           VOLTAR
         </Link>
 
-        <ExternalLink text="VER NO GITHUB" href="#" />
+        <ExternalLink text="VER NO GITHUB" target={'_blank'} href={url} />
       </header>
 
-      <h1>JavaScript data types and data structures</h1>
+      <h1>{title}</h1>
 
       <PostInfo>
         <li>
           <FontAwesomeIcon icon={faGithub} />
-          cameronwll
+          {author}
         </li>
 
         <li>
           <FontAwesomeIcon icon={faCalendarDay} />
-          Há 1 dia
+          {createdAt}
         </li>
 
         <li>
-          <FontAwesomeIcon icon={faComment} />5 comentários
+          <FontAwesomeIcon icon={faComment} />
+          {comments} comentários
         </li>
       </PostInfo>
     </PostInfoCardContainer>

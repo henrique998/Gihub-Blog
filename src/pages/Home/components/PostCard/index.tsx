@@ -1,23 +1,30 @@
+import ReactMarkdown from 'react-markdown'
+import { formattDate } from '../../../../utils/formattDate'
 import { PostCardContainer } from './styles'
 
-export function PostCard() {
-  return (
-    <PostCardContainer to="/post">
-      <header>
-        <h2 title="JavaScript data types and data structures">
-          JavaScript data types and data structures
-        </h2>
+interface PostCardProps {
+  title: string
+  content: string
+  createdAt: string
+  number: number
+}
 
-        <span>Há 1 dia</span>
+export function PostCard({ title, content, number, createdAt }: PostCardProps) {
+  return (
+    <PostCardContainer to={`/post/${number}`}>
+      <header>
+        <h2 title={title}>{title}</h2>
+
+        <span>{formattDate(createdAt)}</span>
       </header>
 
-      <p>
-        Programming languages all have built-in data structures, but these often
-        differ from one language to another. This article attempts to list the
-        built-in data structures available in JavaScript and what properties
-        they have. These can be used to build other data structures. Wherever
-        possible, comparisons with other languages are drawn.
-      </p>
+      <ReactMarkdown
+        linkTarget={'_blank'}
+        remarkPlugins={[]}
+        className="content"
+      >
+        {content}
+      </ReactMarkdown>
     </PostCardContainer>
   )
 }

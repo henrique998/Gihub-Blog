@@ -2,41 +2,54 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { faBuilding, faUserGroup } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ExternalLink } from '../../../../components/ExternalLink'
-import avatar from '../../../../assets/avatar.png'
 
 import { ProfileCardContainer, ProfileCardDetails, ProfileInfo } from './styles'
+import { useEffect, useState } from 'react'
+import { api } from '../../../../libs/axios'
+
+type User = {
+  login: string
+  name: string
+  avatar_url: string
+  bio: string
+  html_url: string
+  company: string
+  followers: number
+}
 
 export function ProfileCard() {
+  const [user, setUser] = useState<User>()
+
+  useEffect(() => {
+    api.get('/users/henrique998').then((response) => setUser(response.data))
+  }, [])
+
   return (
     <ProfileCardContainer>
-      <img src={avatar} alt="avatar" />
+      <img src={user?.avatar_url} alt="avatar" />
 
       <ProfileCardDetails>
         <header>
-          <h1>Cameron Williamson</h1>
-          <ExternalLink text="GITHUB" href="#" target={'_blank'} />
+          <h1>{user?.name}</h1>
+          <ExternalLink text="GITHUB" href={user?.html_url} target={'_blank'} />
         </header>
 
-        <p>
-          Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu
-          viverra massa quam dignissim aenean malesuada suscipit. Nunc, volutpat
-          pulvinar vel mass.
-        </p>
+        <p>{user?.bio}</p>
 
         <ProfileInfo>
           <li>
             <FontAwesomeIcon icon={faGithub} />
-            cameronwll
+            {user?.login}
           </li>
 
           <li>
             <FontAwesomeIcon icon={faBuilding} />
-            Rocketseat
+            {user?.company}
           </li>
 
           <li>
             <FontAwesomeIcon icon={faUserGroup} />
-            32 seguidores
+            {user?.followers} seguidores
           </li>
         </ProfileInfo>
       </ProfileCardDetails>

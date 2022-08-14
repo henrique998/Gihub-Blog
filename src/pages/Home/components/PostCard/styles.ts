@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export const PostCardContainer = styled(Link)`
   background-color: ${(props) => props.theme['base-post']};
   border-radius: 10px;
-  padding: 2rem 1.875rem;
+  padding: 2rem;
   cursor: pointer;
 
   border: 2px solid transparent;
@@ -35,11 +35,15 @@ export const PostCardContainer = styled(Link)`
     }
   }
 
-  p {
+  .content {
     margin-top: 1.25rem;
     color: ${(props) => props.theme['base-text']};
     font-size: 1rem;
     line-height: 1.5rem;
+
+    img {
+      display: none;
+    }
 
     display: -webkit-box;
     -webkit-line-clamp: 4;
